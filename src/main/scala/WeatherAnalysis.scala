@@ -63,7 +63,7 @@ object WeatherAnalysis {
       logger.info("Testing...")
       var list = List[Long]()
       logger.info("Is output variable empty? " + output.isEmpty)
-      for (o <- output) {
+      for (o <- output.take(10)) {
         //list = o._2 :: list
         println(o)
       }
@@ -86,6 +86,5 @@ object WeatherAnalysis {
     // but currently just converts it to a number 0-49
     return (str.toInt % 50).toString
   }
-
 
 }
