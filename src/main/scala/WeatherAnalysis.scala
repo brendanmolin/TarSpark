@@ -10,35 +10,17 @@ import org.apache.spark.{SparkContext, SparkConf}
 object WeatherAnalysis {
 
   def main(args: Array[String]) {
-    try {
-      //set up logging
-      val lm: LogManager = LogManager.getLogManager
-      val logger: Logger = Logger.getLogger(getClass.getName)
-      val fh: FileHandler = new FileHandler("myLog")
-      fh.setFormatter(new SimpleFormatter)
-      lm.addLogger(logger)
-      logger.setLevel(Level.INFO)
-      logger.addHandler(fh)
       //set up spark configuration
       val sparkConf = new SparkConf()
+      sparkConf.setAppName("weatherData")
+      sparkConf.setMaster("local[6]")
+      sparkConf.set("spark.executor.memory", "2g")
 
-      var logFile = ""
-      var local = 500
-      if (args.length < 2) {
-        sparkConf.setMaster("local[6]")
-        sparkConf.setAppName("Inverted Index").set("spark.executor.memory", "2g")
-        logFile = "/data/logfiles"
-      } else {
-
-        logFile = args(0)
-        local = args(1).toInt
-
-      }
       val ctx = new SparkContext(sparkConf)
       //val lines = ctx.textFile(logFile, 1)
       val lines = ctx.textFile("./data/all_data", 1)
-      logger.info("Is lines variable empty? " + lines.isEmpty())
-      logger.info("Example entry in lines: " + lines.first())
+      println("Is lines variable empty? " + lines.isEmpty())
+      println("Example entry in lines: " + lines.first())
       val split = lines.flatMap{s =>
         val tokens = s.split(",")
         // finds the state for a zipcode
@@ -58,15 +40,18 @@ object WeatherAnalysis {
       val deltaSnow = split.groupByKey().map{ s  =>
         val delta =  s._2.max - s._2.min
         (s._1 , delta)
-      }//.filter(s => WeatherAnalysis.failure(s._2))
-      val output = deltaSnow.collect()
-      logger.info("Testing...")
-      var list = List[Long]()
-      logger.info("Is output variable empty? " + output.isEmpty)
-      for (o <- output.take(10)) {
-        //list = o._2 :: list
+      }
+      val failedOutputs = deltaSnow.filter(s => WeatherAnalysis.failure(s._2))
+      println("deltaSnow take 10:")
+      for (o <- deltaSnow.take(10)) {
         println(o)
       }
+      println("Failures:")
+      for (o <- failedOutputs.take(10)) {
+        println(o)
+      }
+    while (true) {
+      // Create infinite while loop to keep localhost:4040 up and running
     }
   }
 
