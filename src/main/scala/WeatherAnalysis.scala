@@ -9,6 +9,10 @@ import org.apache.spark.{SparkContext, SparkConf}
  */
 object WeatherAnalysis {
 
+  class SymInt(value: Int, p: Int)
+  class SymFloat(value: Float, p: Int)
+
+
   def main(args: Array[String]) {
     try {
       //set up logging
@@ -37,6 +41,10 @@ object WeatherAnalysis {
       val ctx = new SparkContext(sparkConf)
       //val lines = ctx.textFile(logFile, 1)
       val lines = ctx.textFile("./data/all_data", 1)
+      for (l <- lines.take(10)) {
+        //list = o._2 :: list
+        println(l)
+      }
       logger.info("Is lines variable empty? " + lines.isEmpty())
       logger.info("Example entry in lines: " + lines.first())
       val split = lines.flatMap{s =>
@@ -54,6 +62,11 @@ object WeatherAnalysis {
           ((state , monthdate) , snow) ,
           ((state , year)  , snow)
         ).iterator
+      }
+
+      for (fm <- split.take(10)) {
+        //list = o._2 :: list
+        println(fm)
       }
       val deltaSnow = split.groupByKey().map{ s  =>
         val delta =  s._2.max - s._2.min
