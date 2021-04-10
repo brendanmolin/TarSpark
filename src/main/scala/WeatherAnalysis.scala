@@ -5,6 +5,7 @@ import org.apache.spark.{SparkContext, SparkConf}
 
 /**
  * Created by ali on 2/25/17.
+ * Modified by BDE Team on Spring 2021
  */
 object WeatherAnalysis {
 
@@ -35,12 +36,11 @@ object WeatherAnalysis {
         var date = covtokens(1)
         // gets snow value and converts it into millimeter
         val snow = convert_to_mm(covtokens(2)) // CAPTURE HERE
-        //lineHis.append(snowTuple._1)
         //gets year
         val year = date.value.substring(date.value.lastIndexOf("/"))
         // gets month / date
         val monthdate= date.value.substring(0,date.value.lastIndexOf("/")-1)
-        List[((String , String) , Float)](
+        List[((String , String) , CovFloat)](
           ((state.value , monthdate) , snow) , // CAPTURE HERE (PROBLEM HERE: HOW TO RETURN LINE NUMBER WITH VALUE??? USE SYM PROBABLY
           ((state.value , year)  , snow) // CAPTURE HERE
         ).iterator
@@ -51,7 +51,6 @@ object WeatherAnalysis {
         val delta =  s1.max - s2.min
         (s._1 , delta)
       }//.filter(s => WeatherAnalysis.failure(s._2))
-      //(key, (snow, (lines hit 1, lines hit 2)))
       val output = deltaSnow.collect()
       var list = List[Long]()
       for (o <- output.take(10)) {
