@@ -41,8 +41,8 @@ object WeatherAnalysis {
         // gets month / date
         val monthdate= date.value.substring(0,date.value.lastIndexOf("/")-1)
         List[((String , String) , CovFloat)](
-          ((state.value , monthdate) , snow) , // CAPTURE HERE (PROBLEM HERE: HOW TO RETURN LINE NUMBER WITH VALUE??? USE SYM PROBABLY
-          ((state.value , year)  , snow) // CAPTURE HERE
+          ((state.value , monthdate) , snow.appendHistory(44)) , // CAPTURE HERE (PROBLEM HERE: HOW TO RETURN LINE NUMBER WITH VALUE??? USE SYM PROBABLY
+          ((state.value , year)  , snow.appendHistory(45)) // CAPTURE HERE
         ).iterator
       }
       val deltaSnow = split.groupByKey().map{ s  =>
