@@ -31,18 +31,18 @@ object WeatherAnalysis {
         var covS = CovString(s, ArrayBuffer[Int]())
         val covtokens = covS.split(",")
         // finds the state for a zipcode
-        var state = zipToState(covtokens(0).value)
-        var date = covtokens(1).value
+        var state = zipToState(covtokens(0))
+        var date = covtokens(1)
         // gets snow value and converts it into millimeter
-        val snow = convert_to_mm(covtokens(2).value) // CAPTURE HERE
+        val snow = convert_to_mm(covtokens(2)) // CAPTURE HERE
         //lineHis.append(snowTuple._1)
         //gets year
-        val year = date.substring(date.lastIndexOf("/"))
+        val year = date.value.substring(date.value.lastIndexOf("/"))
         // gets month / date
-        val monthdate= date.substring(0,date.lastIndexOf("/")-1)
+        val monthdate= date.value.substring(0,date.value.lastIndexOf("/")-1)
         List[((String , String) , Float)](
-          ((state , monthdate) , snow) , // CAPTURE HERE (PROBLEM HERE: HOW TO RETURN LINE NUMBER WITH VALUE??? USE SYM PROBABLY
-          ((state , year)  , snow) // CAPTURE HERE
+          ((state.value , monthdate) , snow) , // CAPTURE HERE (PROBLEM HERE: HOW TO RETURN LINE NUMBER WITH VALUE??? USE SYM PROBABLY
+          ((state.value , year)  , snow) // CAPTURE HERE
         ).iterator
       }
       val deltaSnow = split.groupByKey().map{ s  =>
@@ -61,21 +61,21 @@ object WeatherAnalysis {
     }
   }
 
-  def convert_to_mm(s: String): Float = {
+  def convert_to_mm(s: CovString): CovFloat = {
     val unit = s.substring(s.length - 2)
     val v = s.substring(0, s.length - 2).toFloat
-    unit match {
-      case "mm" => return v
-      case _ => return v * 304.8f
+    unit.value match {
+      case "mm" => return CovFloat(v.value, v.hist+=68)
+      case _ => return v * (304.8f, 69)
     }
   }
   def failure(record:Float): Boolean ={
     record > 6000f
   }
-  def zipToState(str : String):String = {
+  def zipToState(str : CovString):CovString = {
     // This is meant to change a zipcode to a state,
     // but currently just converts it to a number 0-49
-    return (str.toInt % 50).toString
+    return (str.toInt % 50).toCovString
   }
 
 }
