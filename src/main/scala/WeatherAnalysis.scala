@@ -1,7 +1,6 @@
-
+import collection.mutable.ArrayBuffer
 import java.util.{StringTokenizer, Calendar}
 import java.util.logging._
-
 import org.apache.spark.{SparkContext, SparkConf}
 
 /**
@@ -11,14 +10,6 @@ object WeatherAnalysis {
 
   def main(args: Array[String]) {
     try {
-      //set up logging
-      val lm: LogManager = LogManager.getLogManager
-      val logger: Logger = Logger.getLogger(getClass.getName)
-      val fh: FileHandler = new FileHandler("myLog")
-      fh.setFormatter(new SimpleFormatter)
-      lm.addLogger(logger)
-      logger.setLevel(Level.INFO)
-      logger.addHandler(fh)
       //set up spark configuration
       val sparkConf = new SparkConf()
 
@@ -35,17 +26,16 @@ object WeatherAnalysis {
 
       }
       val ctx = new SparkContext(sparkConf)
-      //val lines = ctx.textFile(logFile, 1)
       val lines = ctx.textFile("./data/all_data", 1)
       val split = lines.flatMap{s =>
-        val tokens = s.split(",")
-        val lineHis = List()
+        var covS = CovString(s, ArrayBuffer[Int]())
+        val covtokens = covS.split(",")
         // finds the state for a zipcode
-        var state = zipToState(tokens(0))
-        var date = tokens(1)
+        var state = zipToState(covtokens(0).value)
+        var date = covtokens(1).value
         // gets snow value and converts it into millimeter
-        val snowTuple = convert_to_mm(tokens(2)) // CAPTURE HERE
-        lineHis.append(snowTuple._1)
+        val snow = convert_to_mm(covtokens(2).value) // CAPTURE HERE
+        //lineHis.append(snowTuple._1)
         //gets year
         val year = date.substring(date.lastIndexOf("/"))
         // gets month / date
@@ -63,9 +53,7 @@ object WeatherAnalysis {
       }//.filter(s => WeatherAnalysis.failure(s._2))
       //(key, (snow, (lines hit 1, lines hit 2)))
       val output = deltaSnow.collect()
-      logger.info("Testing...")
       var list = List[Long]()
-      logger.info("Is output variable empty? " + output.isEmpty)
       for (o <- output.take(10)) {
         //list = o._2 :: list
         println(o)
@@ -73,12 +61,12 @@ object WeatherAnalysis {
     }
   }
 
-  def convert_to_mm(s: String): (Float, Int) = {
+  def convert_to_mm(s: String): Float = {
     val unit = s.substring(s.length - 2)
     val v = s.substring(0, s.length - 2).toFloat
     unit match {
-      case "mm" => return (v, 80) // now record has v, 80
-      case _ => return v * 304.8f, 81) // now record has v, 81
+      case "mm" => return v
+      case _ => return v * 304.8f
     }
   }
   def failure(record:Float): Boolean ={
