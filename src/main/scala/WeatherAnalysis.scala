@@ -13,12 +13,17 @@ object WeatherAnalysis {
     try {
       //set up spark configuration
       val sparkConf = new SparkConf()
+      sparkConf.setAppName("weatherData")
+      sparkConf.setMaster("local[6]")
+      sparkConf.set("spark.executor.memory", "2g")
 
       sparkConf.setMaster("local[6]")
       sparkConf.setAppName("Inverted Index").set("spark.executor.memory", "2g")
 
       val ctx = new SparkContext(sparkConf)
       val lines = ctx.textFile("./data/all_data", 1)
+      println("Is lines variable empty? " + lines.isEmpty())
+      println("Example entry in lines: " + lines.first())
       val split = lines.flatMap{s =>
         var covS = CovString(s, ArrayBuffer[Int]())
         val covtokens = covS.split(",")
