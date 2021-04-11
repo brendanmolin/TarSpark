@@ -1,7 +1,9 @@
+import org.apache.spark.rdd.RDD
+
 import collection.mutable.ArrayBuffer
-import java.util.{StringTokenizer, Calendar}
+import java.util.{Calendar, StringTokenizer}
 import java.util.logging._
-import org.apache.spark.{SparkContext, SparkConf}
+import org.apache.spark.{SparkConf, SparkContext}
 
 /**
  * Created by ali on 2/25/17.
@@ -28,7 +30,12 @@ object WeatherAnalysis {
       }
       val ctx = new SparkContext(sparkConf)
       val lines = ctx.textFile("./data/all_data", 1)
-      val split = lines.flatMap{s =>
+      for (l <- lines.take(40)) {
+        //list = o._2 :: list
+        println(l)
+      }
+
+      val lines_split = lines.flatMap{s =>
         var covS = CovString(s, ArrayBuffer[Int]())
         val covtokens = covS.split(",")
         // finds the state for a zipcode
@@ -39,13 +46,17 @@ object WeatherAnalysis {
         //gets year
         val year = date.value.substring(date.value.lastIndexOf("/"))
         // gets month / date
-        val monthdate= date.value.substring(0,date.value.lastIndexOf("/")-1)
+        val monthdate= date.value.substring(0,date.value.lastIndexOf("/"))
         List[((String , String) , CovFloat)](
           ((state.value , monthdate) , snow.appendHistory(44)) , // CAPTURE HERE (PROBLEM HERE: HOW TO RETURN LINE NUMBER WITH VALUE??? USE SYM PROBABLY
           ((state.value , year)  , snow.appendHistory(45)) // CAPTURE HERE
         ).iterator
       }
-      val deltaSnow = split.groupByKey().map{ s  =>
+      for (sv <- lines_split.take(40)) {
+        //list = o._2 :: list
+        println(sv)
+      }
+      val deltaSnow = lines_split.groupByKey().map{ s  =>
         val s1 = s._2
         val s2 = s._2
         val delta =  s1.max - s2.min
@@ -53,7 +64,7 @@ object WeatherAnalysis {
       }//.filter(s => WeatherAnalysis.failure(s._2))
       val output = deltaSnow.collect()
       var list = List[Long]()
-      for (o <- output.take(10)) {
+      for (o <- output.take(30)) {
         //list = o._2 :: list
         println(o)
       }
