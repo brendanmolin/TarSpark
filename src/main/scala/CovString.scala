@@ -2,6 +2,14 @@ import collection.mutable.ArrayBuffer
 
 case class CovString(var value: String, var hist: ArrayBuffer[Int]){
 
+  def deepCopy(): CovString = {
+    CovString(value, hist.clone())
+  }
+
+  def appendHistory(lineNum: Int): CovString = {
+    CovString(value, hist+=lineNum)
+  }
+
   def split(separator: String, lineNum: Int = -1): Array[CovString] = {
     if (lineNum != -1) {
       hist+=lineNum

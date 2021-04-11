@@ -37,12 +37,12 @@ object WeatherAnalysis {
         // gets snow value and converts it into millimeter
         val snow = convert_to_mm(covtokens(2)) // CAPTURE HERE
         //gets year
-        val year = date.value.substring(date.value.lastIndexOf("/"))
+        val year = date.substring(date.value.lastIndexOf("/") + 1).deepCopy().appendHistory(40)
         // gets month / date
-        val monthdate= date.value.substring(0,date.value.lastIndexOf("/")-1)
+        val monthdate= date.substring(0,date.value.lastIndexOf("/")).deepCopy().appendHistory(42)
         List[((String , String) , CovFloat)](
-          ((state.value , monthdate) , snow.appendHistory(44)) , // CAPTURE HERE (PROBLEM HERE: HOW TO RETURN LINE NUMBER WITH VALUE??? USE SYM PROBABLY
-          ((state.value , year)  , snow.appendHistory(45)) // CAPTURE HERE
+          ((state.value , monthdate.value) , snow.deepCopy().appendHistory(monthdate.hist)) , // CAPTURE HERE (PROBLEM HERE: HOW TO RETURN LINE NUMBER WITH VALUE??? USE SYM PROBABLY
+          ((state.value , year.value)  , snow.deepCopy().appendHistory(year.hist)) // CAPTURE HERE
         ).iterator
       }
       val deltaSnow = split.groupByKey().map{ s  =>
@@ -50,12 +50,13 @@ object WeatherAnalysis {
         val s2 = s._2
         val delta =  s1.max - s2.min
         (s._1 , delta)
-      }//.filter(s => WeatherAnalysis.failure(s._2))
+      }
       val output = deltaSnow.collect()
       var list = List[Long]()
       for (o <- output.take(10)) {
         //list = o._2 :: list
         println(o)
+        //print(o._1._2.value)
       }
     }
   }
@@ -65,7 +66,7 @@ object WeatherAnalysis {
     val v = s.substring(0, s.length - 2).toFloat
     unit.value match {
       case "mm" => return CovFloat(v.value, v.hist+=68)
-      case _ => return v * (304.8f, 69)
+      case _ => return CovFloat(v.value * 304.8f, v.hist+=69)
     }
   }
   def failure(record:Float): Boolean ={
