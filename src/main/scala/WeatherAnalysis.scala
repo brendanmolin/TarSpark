@@ -1,7 +1,9 @@
 import collection.mutable.ArrayBuffer
-import java.util.{StringTokenizer, Calendar}
+import java.util.{Calendar, StringTokenizer}
 import java.util.logging._
-import org.apache.spark.{SparkContext, SparkConf}
+import org.apache.spark.{SparkConf, SparkContext}
+
+import java.util
 
 /**
  * Created by ali on 2/25/17.
@@ -48,10 +50,11 @@ object WeatherAnalysis {
         (s._1 , delta)
       }//.filter(s => WeatherAnalysis.failure(s._2))
       val output = deltaSnow.collect()
-      var list = List[Long]()
+
       for (o <- output.take(10)) {
         println(o)
       }
+
 
       //TODO add function to test output and return dictionary of line numbers and failure %
     }
@@ -64,6 +67,23 @@ object WeatherAnalysis {
       case "mm" => return CovFloat(v.value, v.hist += 68)
       case _ => return CovFloat(v.value * 304.8f, v.hist += 69)
     }
+  }
+
+  def detectFailedLines(resultList:List[((String, String), CovFloat)]): collection.mutable.HashMap[Int, (Int, Int)] = {
+    // (lineNo, (No of passing records, No of failing records)
+    val resultMap = collection.mutable.HashMap[Int, (Int, Int)]() // Create new empty Map
+    for (o <- resultList){
+      val isFailure = failure(o._2.value)
+      for (eaLine <- o._2.hist){
+        if (!resultMap.contains(eaLine)){ // If this line No isn't in the dictionary yet, add it
+          resultMap.+=((eaLine, (0, 0)))
+        }
+        case isFailure => resultMap.update(eaLine, resultMap.get(eaLine))
+          // If the entry was a failure, update key eaLine (x, y) -> (x, y+1)
+        case _ => //update key eaLine (x, y) => (x+1, y)
+      }
+    }
+    return resultMap
   }
 
   def failure(record:Float): Boolean ={
