@@ -6,7 +6,7 @@ case class CovFloat(value: Float, hist: ArrayBuffer[Int]) {
     CovFloat(value, hist+=lineNum)
   }
 
-  def *(x: Float, lineNum: Int = -1): CovFloat = {
+  def *(x: Float, lineNum: Int = -1): CovFloat = { //TODO remove lineNum parameter and check, use append history or reWrap as new CovFloat
     if (lineNum != -1) {
       hist+=lineNum
     }
