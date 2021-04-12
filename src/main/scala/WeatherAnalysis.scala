@@ -52,8 +52,7 @@ object WeatherAnalysis {
       for (o <- output.take(10)) {
         println(o)
       }
-
-      //TODO add function to test output and return dictionary of line numbers and failure %
+      println(detectFailedLines(output))
     }
   }
 
@@ -66,7 +65,7 @@ object WeatherAnalysis {
     }
   }
 
-  def detectFailedLines(resultList:List[((String, String), CovFloat)]): collection.mutable.HashMap[Int, (Int, Int)] = {
+  def detectFailedLines(resultList:Array[((String, String), CovFloat)]): collection.mutable.HashMap[Int, (Int, Int)] = {
     // (lineNo, (No of passing records, No of failing records)
     val resultMap = collection.mutable.HashMap[Int, (Int, Int)]() // Create new empty Map
     for (o <- resultList){
@@ -77,17 +76,13 @@ object WeatherAnalysis {
         }
         if (isFailure){
           val rec = resultMap.get(eaLine)
-          val new_rec = (rec._1, 1 + rec._2)
+          val new_rec = (rec.get._1, 1 + rec.get._2)
           resultMap.update(eaLine, new_rec) // tuple can be stored in a separate var if error returned
         } else {
           val rec = resultMap.get(eaLine)
-          val new_rec = (1 + rec._1, rec._2)
+          val new_rec = (1 + rec.get._1, rec.get._2)
           resultMap.update(eaLine, new_rec) // tuple can be stored in a separate var if error returned
         }
-        //case isFailure => resultMap.update(eaLine, resultMap.get(eaLine))
-        //case isFailure =>
-        // If the entry was a failure, update key eaLine (x, y) -> (x, y+1)
-        //case _ => //update key eaLine (x, y) => (x+1, y)
       }
     }
     return resultMap
