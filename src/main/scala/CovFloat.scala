@@ -3,33 +3,27 @@ import collection.mutable.ArrayBuffer
 case class CovFloat(value: Float, hist: ArrayBuffer[Int]) {
 
   def appendHistory(lineNum: Int): CovFloat = {
-    CovFloat(value, hist+=lineNum)
-  }
-  def divergeFloatCopy(x: CovFloat): CovFloat = {
-    //val xNew = x.copy(hist += lineNum)
-    CovFloat(x.value, x.hist.clone())
+    CovFloat(value, (hist+=lineNum).distinct)
   }
 
-  def mergeHistory(a: CovFloat, b: CovString): CovFloat = {
-    CovFloat(a.value, a.hist ++= b.histString)
+  def diverge(): CovFloat = {
+    CovFloat(value, hist.clone())
   }
 
-  def distinctHist(a: CovFloat): CovFloat = {
-    CovFloat(a.value, hist.distinct)
+  def mergeHistory(a: CovFloat): CovFloat = {
+    CovFloat(value, (hist ++= a.hist).distinct)
   }
-  def *(x: Float, lineNum: Int = -1): CovFloat = { //TODO remove lineNum parameter and check, use append history or reWrap as new CovFloat
-    if (lineNum != -1) {
-      hist+=lineNum
-    }
+
+  def mergeHistory(a: CovString): CovFloat = {
+    CovFloat(value, (hist ++= a.hist).distinct)
+  }
+
+  def *(x: Float): CovFloat = {
     CovFloat(value * x, hist)
   }
 
-
-  def -(x: CovFloat, lineNum: Int = -1): CovFloat = {
-    if (lineNum != -1) {
-      hist+=lineNum
-    }
-    CovFloat(value - x.value, hist ++ x.hist)
+  def -(x: CovFloat): CovFloat = {
+    CovFloat(value - x.value, (hist ++ x.hist).distinct)
   }
 }
 

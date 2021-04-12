@@ -1,51 +1,43 @@
 import collection.mutable.ArrayBuffer
 
-case class CovString(var value: String, var histString: ArrayBuffer[Int]){
+case class CovString(var value: String, var hist: ArrayBuffer[Int]){
 
-  def split(separator: String, lineNum: Int = -1): Array[CovString] = {
-    if (lineNum != -1) {
-      histString +=lineNum
-    }
+  def appendHistory(lineNum: Int): CovString = {
+    CovString(value, (hist+=lineNum).distinct)
+  }
 
+  def split(separator: String): Array[CovString] = {
     value
       .split(separator)
       .map(s =>
         CovString(
-          s, histString))
+          s, hist))
   }
 
   def substring(beginIndex: Int): CovString = {
     val valueStr = value.substring(beginIndex)
-    CovString(valueStr, histString)
+    CovString(valueStr, hist)
   }
-  def dateSubstring(beginIndex: Int, lineNum: Int): CovString = {
-    val valueStr = value.substring(beginIndex)
-    CovString(valueStr, histString += lineNum)
-  }
+
   def substring(beginIndex: Int, endIndex: Int): CovString = {
     var valueStr = value.substring(beginIndex, endIndex)
-    CovString(valueStr, histString)
-  }
-  def dateSubstring(beginIndex: Int, endIndex: Int, lineNum: Int): CovString = {
-    var valueStr = value.substring(beginIndex, endIndex)
-    CovString(valueStr, histString+= lineNum)
+    CovString(valueStr, hist)
   }
 
-  def divergeStrCopy(x: CovString): CovString = {
-    //val xNew = x.copy(hist += lineNum)
-    CovString(x.value, x.histString.clone())
+  def diverge(): CovString = {
+    CovString(value, hist.clone())
   }
 
-  def mergeHistory(a: CovFloat, b: CovString): CovFloat = {
-    CovFloat(a.value, a.hist ++= b.histString)
+  def mergeHistory(a: CovFloat): CovString = {
+    CovString(value, (hist ++= a.hist).distinct)
   }
 
   def toInt(): CovInt = {
-    CovInt(value.toInt, histString)
+    CovInt(value.toInt, hist)
   }
 
   def toFloat(): CovFloat = {
-    CovFloat(value.toFloat, histString)
+    CovFloat(value.toFloat, hist)
   }
 
   def length(): Int = {
