@@ -52,8 +52,7 @@ object WeatherAnalysis {
       for (o <- output.take(10)) {
         println(o)
       }
-
-      //TODO add function to test output and return dictionary of line numbers and failure %
+      println(detectFailedLines(output))
     }
   }
 
@@ -64,6 +63,29 @@ object WeatherAnalysis {
       case "mm" => return CovFloat(v.value, v.hist += 68)
       case _ => return CovFloat(v.value * 304.8f, v.hist += 69)
     }
+  }
+
+  def detectFailedLines(resultList:Array[((String, String), CovFloat)]): collection.mutable.HashMap[Int, (Int, Int)] = {
+    // (lineNo, (No of passing records, No of failing records)
+    val resultMap = collection.mutable.HashMap[Int, (Int, Int)]() // Create new empty Map
+    for (o <- resultList){
+      val isFailure = failure(o._2.value)
+      for (eaLine <- o._2.hist){
+        if (!resultMap.contains(eaLine)){ // If this line No isn't in the dictionary yet, add it
+          resultMap.+=((eaLine, (0, 0)))
+        }
+        if (isFailure){
+          val rec = resultMap.get(eaLine)
+          val new_rec = (rec.get._1, 1 + rec.get._2)
+          resultMap.update(eaLine, new_rec) // tuple can be stored in a separate var if error returned
+        } else {
+          val rec = resultMap.get(eaLine)
+          val new_rec = (1 + rec.get._1, rec.get._2)
+          resultMap.update(eaLine, new_rec) // tuple can be stored in a separate var if error returned
+        }
+      }
+    }
+    return resultMap
   }
 
   def failure(record:Float): Boolean ={
