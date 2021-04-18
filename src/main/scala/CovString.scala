@@ -2,11 +2,11 @@ import collection.mutable.ArrayBuffer
 
 case class CovString(var value: String, var hist: ArrayBuffer[Int]){
 
-  def split(separator: String, lineNum: Int = -1): Array[CovString] = {
-    if (lineNum != -1) {
-      hist+=lineNum
-    }
+  def appendHistory(lineNum: Int): CovString = {
+    CovString(value, (hist+=lineNum).distinct)
+  }
 
+  def split(separator: String): Array[CovString] = {
     value
       .split(separator)
       .map(s =>
@@ -22,6 +22,14 @@ case class CovString(var value: String, var hist: ArrayBuffer[Int]){
   def substring(beginIndex: Int, endIndex: Int): CovString = {
     var valueStr = value.substring(beginIndex, endIndex)
     CovString(valueStr, hist)
+  }
+
+  def diverge(): CovString = {
+    CovString(value, hist.clone())
+  }
+
+  def mergeHistory(a: CovFloat): CovString = {
+    CovString(value, (hist ++= a.hist).distinct)
   }
 
   def toInt(): CovInt = {
