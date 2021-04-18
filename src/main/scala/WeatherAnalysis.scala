@@ -33,13 +33,17 @@ object WeatherAnalysis {
         // gets snow value and converts it into millimeter
         val snow = convert_to_mm(covtokens(2)) // CAPTURE HERE
         //gets year
-        val year = date.value.substring(date.value.lastIndexOf("/") + 1)
+        val year = date.diverge().substring(date.value.lastIndexOf("/") + 1).appendHistory(36)
         // gets month / date
-        val monthdate= date.value.substring(0, date.value.lastIndexOf("/"))
+        val monthdate= date.diverge().substring(0, date.value.lastIndexOf("/")).appendHistory(38)
+
         List[((String , String) , CovFloat)](
-          ((state.value , monthdate) , snow.appendHistory(44)) , // CAPTURE HERE (PROBLEM HERE: HOW TO RETURN LINE NUMBER WITH VALUE??? USE SYM PROBABLY
-          ((state.value , year)  , snow.appendHistory(45)) // CAPTURE HERE
+          ((state.value , monthdate.value) , snow.diverge().mergeHistory(monthdate)) ,
+          ((state.value , year.value)  , snow.diverge().mergeHistory(year))
         ).iterator
+      }
+      for (sn <- split.take(10)) {
+        println(sn)
       }
       val deltaSnow = split.groupByKey().map{ s  =>
         val s1 = s._2
@@ -47,6 +51,7 @@ object WeatherAnalysis {
         val delta =  s1.max - s2.min
         (s._1 , delta)
       }//.filter(s => WeatherAnalysis.failure(s._2))
+
       val output = deltaSnow.collect()
       var list = List[Long]()
       for (o <- output.take(10)) {
@@ -60,8 +65,9 @@ object WeatherAnalysis {
     val unit = s.substring(s.length - 2)
     val v = s.substring(0, s.length - 2).toFloat
     unit.value match {
-      case "mm" => return CovFloat(v.value, v.hist += 68)
-      case _ => return CovFloat(v.value * 304.8f, v.hist += 69)
+      case "mm" => return v.appendHistory(68)
+      //case "inch" => return ...
+      case _ => return (v * 304.8f).appendHistory(69)
     }
   }
 
