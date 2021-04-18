@@ -1,7 +1,7 @@
 import collection.mutable.ArrayBuffer
-import java.util.{StringTokenizer, Calendar}
+import java.util.{Calendar, StringTokenizer}
 import java.util.logging._
-import org.apache.spark.{SparkContext, SparkConf}
+import org.apache.spark.{SparkConf, SparkContext}
 
 /**
  * Created by ali on 2/25/17.
@@ -62,7 +62,15 @@ object WeatherAnalysis {
       for (o <- output.take(10)) {
         println(o)
       }
-      println(detectFailedLines(output))
+      val output2 = summarizeFailLines(output)
+      val resultMap = output2._1
+      val totalNumberOfPasses = output2._2
+      val totalNumberOfFailures = output2._3
+
+      println(resultMap)
+      println(totalNumberOfPasses)
+      println(totalNumberOfFailures)
+      getFailedLine(resultMap, totalNumberOfPasses, totalNumberOfFailures)
     }
   }
 
@@ -75,11 +83,17 @@ object WeatherAnalysis {
     }
   }
 
-  def detectFailedLines(resultList:Array[((String, String), CovFloat)]): collection.mutable.HashMap[Int, (Int, Int)] = {
+  def summarizeFailLines(resultList:Array[((String, String), CovFloat)]): (collection.mutable.HashMap[Int, (Int, Int)], Int, Int) = {
     // (lineNo, (No of passing records, No of failing records)
+    var totalNumberOfPasses = resultList.length
+    var totalNumberOfFailures = 0
     val resultMap = collection.mutable.HashMap[Int, (Int, Int)]() // Create new empty Map
     for (o <- resultList){
       val isFailure = failure(o._2.value)
+      if (isFailure){
+        totalNumberOfFailures += 1
+        totalNumberOfPasses -= 1
+      }
       for (eaLine <- o._2.hist){
         if (!resultMap.contains(eaLine)){ // If this line No isn't in the dictionary yet, add it
           resultMap.+=((eaLine, (0, 0)))
@@ -95,7 +109,32 @@ object WeatherAnalysis {
         }
       }
     }
-    return resultMap
+    return (resultMap, totalNumberOfPasses, totalNumberOfFailures)
+  }
+
+  def getFailedLine(resultMap:collection.mutable.HashMap[Int, (Int, Int)], totalNumberOfPasses:Int, totalNumberOfFailures:Int): Int = {
+    /* Takes the result map of (lineNo, (passing cases, failing cases))
+        and returns the line number most likely to be causing the issue.
+        Returns -1 if no failures were detected.
+     */
+    if (totalNumberOfFailures == 0){
+      return -1 /* No failing lines */
+    }
+    //val LineRankings = collection.mutable.HashMap[Int, Int]() // Create new empty Map
+    var lineRankings = ArrayBuffer[(Int, Double)]() //Create new list of Tuples
+    for (eaLine <- resultMap){
+      val lineNo = eaLine._1
+      val failScore = eaLine._2._2 / totalNumberOfFailures
+      val passScore = eaLine._2._1 / totalNumberOfPasses
+      val score = failScore / (failScore + passScore)
+      //LineRankings(lineNo) = score
+      lineRankings.append((lineNo, score))
+    }
+    // Sort Array
+    lineRankings.sortBy(_._2)(Ordering[Double].reverse)
+    println(lineRankings.take(10))
+
+    return lineRankings(0)._1
   }
 
   def failure(record:Float): Boolean ={
