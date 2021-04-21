@@ -1,0 +1,104 @@
+[debug] > Exec(early(addDefaultCommands), None, None)
+[debug] > Exec(addDefaultCommands, None, None)
+[debug] > Exec(early(initialize), None, None)
+[debug] > Exec(initialize, None, None)
+[debug] > Exec(early(addPluginSbtFile="""C:\Users\megla\AppData\Local\Temp\idea.sbt"""), None, None)
+[debug] > Exec(addPluginSbtFile="""C:\Users\megla\AppData\Local\Temp\idea.sbt""", None, None)
+[debug] > Exec(boot, None, None)
+[debug] > Exec(writeSbtVersion, None, None)
+[info] Updated file C:\Users\megla\IdeaProjects\weatherDataProject\project\build.properties: set sbt.version to 1.4.3
+[debug] > Exec(reload, None, None)
+[debug] > Exec(sbtStashOnFailure, None, None)
+[debug] > Exec(onFailure loadFailed, None, None)
+[debug] > Exec(loadp, None, None)
+[info] welcome to sbt 1.4.3 (Amazon.com Inc. Java 1.8.0_282)
+[debug]       Load.loadUnit: plugins took 92.836ms
+[debug]       Load.loadUnit: defsScala took 0.339ms
+[debug] [Loading] Scanning directory C:\Users\megla\.sbt\1.0\plugins
+[debug] [Loading] Found non-root projects 
+[debug] [Loading] Done in C:\Users\megla\.sbt\1.0\plugins, returning: ()
+[debug] deducing auto plugins based on known facts Set(Atom(sbt.plugins.CorePlugin)) and clauses Clauses(List(Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.IvyPlugin))), Clause(Atom(sbt.ScriptedPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.SbtPlugin),Set(Atom(sbt.ScriptedPlugin))), Clause(Atom(sbt.plugins.SemanticdbPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.JUnitXmlReportPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.MiniDependencyTreePlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.IvyPlugin))), Clause(Atom(sbt.plugins.IvyPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.SemanticdbPlugin))), Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.JUnitXmlReportPlugin))), Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.Giter8TemplatePlugin))), Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.MiniDependencyTreePlugin)))))
+[debug]   :: deduced result: Matched(sbt.plugins.CorePlugin,sbt.plugins.Giter8TemplatePlugin,sbt.plugins.IvyPlugin,sbt.plugins.JvmPlugin,sbt.plugins.MiniDependencyTreePlugin,sbt.plugins.JUnitXmlReportPlugin,sbt.plugins.SemanticdbPlugin)
+[debug] Plugins.deducer#function took 27.2872 ms
+[debug]           Load.resolveProject(global-plugins) took 172.0284ms
+[debug]         Load.loadTransitive: finalizeProject(Project(id global-plugins, base: C:\Users\megla\.sbt\1.0\plugins, plugins: List(<none>))) took 221.9211ms
+[debug] [Loading] Done in C:\Users\megla\.sbt\1.0\plugins, returning: (global-plugins)
+[debug]       Load.loadUnit: loadedProjectsRaw took 243.8942ms
+[debug]       Load.loadUnit: cleanEvalClasses took 0.2162ms
+[debug]     Load.loadUnit(file:/C:/Users/megla/.sbt/1.0/plugins/, ...) took 345.0702ms
+[debug]   Load.apply: load took 545.1148ms
+[debug]   Load.apply: resolveProjects took 5.7323ms
+[debug]   Load.apply: finalTransforms took 54.7392ms
+[debug]   Load.apply: config.delegates took 6.4787ms
+[debug]   Load.apply: Def.make(settings)... took 1041.5187ms
+[debug]   Load.apply: structureIndex took 89.1032ms
+[debug]   Load.apply: mkStreams took 1.7483ms
+[info] loading global plugins from C:\Users\megla\.sbt\1.0\plugins
+[debug] Running task... Cancel: Signal, check cycles: false, forcegc: true
+[debug] Load.defaultLoad until apply took 3896.5728ms
+[debug]           Load.loadUnit: plugins took 23.7565ms
+[debug]           Load.loadUnit: defsScala took 0.0033ms
+[debug] [Loading] Scanning directory C:\Users\megla\IdeaProjects\weatherDataProject\project
+[debug]             Load.loadUnit: mkEval took 7.755ms
+[debug] [Loading] Found non-root projects 
+[debug] [Loading] Done in C:\Users\megla\IdeaProjects\weatherDataProject\project, returning: ()
+[debug] deducing auto plugins based on known facts Set(Atom(sbt.plugins.CorePlugin)) and clauses Clauses(List(Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.IvyPlugin))), Clause(Atom(sbt.ScriptedPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.SbtPlugin),Set(Atom(sbt.ScriptedPlugin))), Clause(Atom(sbt.plugins.SemanticdbPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.JUnitXmlReportPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.MiniDependencyTreePlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.IvyPlugin))), Clause(Atom(sbt.plugins.IvyPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.SemanticdbPlugin))), Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.JUnitXmlReportPlugin))), Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.Giter8TemplatePlugin))), Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.MiniDependencyTreePlugin)))))
+[debug]   :: deduced result: Matched(sbt.plugins.CorePlugin,sbt.plugins.Giter8TemplatePlugin,sbt.plugins.IvyPlugin,sbt.plugins.JvmPlugin,sbt.plugins.MiniDependencyTreePlugin,sbt.plugins.JUnitXmlReportPlugin,sbt.plugins.SemanticdbPlugin)
+[debug] Plugins.deducer#function took 1.3853 ms
+[info] loading settings for project weatherdataproject-build from idea.sbt ...
+[debug]               Load.resolveProject(weatherdataproject-build) took 3.1519ms
+[debug]             Load.loadTransitive: finalizeProject(Project(id weatherdataproject-build, base: C:\Users\megla\IdeaProjects\weatherDataProject\project, plugins: List(<none>))) took 5.0326ms
+[debug] [Loading] Done in C:\Users\megla\IdeaProjects\weatherDataProject\project, returning: (weatherdataproject-build)
+[debug]           Load.loadUnit: loadedProjectsRaw took 2034.355ms
+[debug]           Load.loadUnit: cleanEvalClasses took 5.5842ms
+[debug]         Load.loadUnit(file:/C:/Users/megla/IdeaProjects/weatherDataProject/project/, ...) took 2064.7166ms
+[debug]       Load.apply: load took 2066.1579ms
+[debug]       Load.apply: resolveProjects took 0.0986ms
+[debug]       Load.apply: finalTransforms took 6.6061ms
+[debug]       Load.apply: config.delegates took 0.4194ms
+[debug]       Load.apply: Def.make(settings)... took 66.5539ms
+[debug]       Load.apply: structureIndex took 22.4208ms
+[debug]       Load.apply: mkStreams took 0.0021ms
+[info] loading project definition from C:\Users\megla\IdeaProjects\weatherDataProject\project
+[debug] Running task... Cancel: Signal, check cycles: false, forcegc: true
+[debug]     Load.loadUnit: plugins took 4028.8832ms
+[debug]     Load.loadUnit: defsScala took 0.0034ms
+[debug] [Loading] Scanning directory C:\Users\megla\IdeaProjects\weatherDataProject
+[debug]       Load.loadUnit: mkEval took 0.386ms
+[debug] [Loading] Found non-root projects 
+[debug] [Loading] Done in C:\Users\megla\IdeaProjects\weatherDataProject, returning: ()
+[debug] deducing auto plugins based on known facts Set(Atom(sbt.plugins.CorePlugin)) and clauses Clauses(List(Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.IvyPlugin))), Clause(Atom(sbt.ScriptedPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.SbtPlugin),Set(Atom(sbt.ScriptedPlugin))), Clause(Atom(sbt.plugins.SemanticdbPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.JUnitXmlReportPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.MiniDependencyTreePlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(org.jetbrains.sbt.StructurePlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(org.jetbrains.sbt.IdeaShellPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(org.jetbrains.sbt.indices.SbtIntellijIndicesPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.IvyPlugin))), Clause(Atom(sbt.plugins.IvyPlugin),Set(Atom(sbt.plugins.JvmPlugin))), Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.SemanticdbPlugin))), Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.JUnitXmlReportPlugin))), Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.Giter8TemplatePlugin))), Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.MiniDependencyTreePlugin))), Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(org.jetbrains.sbt.StructurePlugin))), Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(org.jetbrains.sbt.IdeaShellPlugin))), Clause(And(Set(Atom(sbt.plugins.CorePlugin), Atom(sbt.plugins.JvmPlugin))),Set(Atom(org.jetbrains.sbt.indices.SbtIntellijIndicesPlugin)))))
+[debug]   :: deduced result: Matched(sbt.plugins.CorePlugin,sbt.plugins.Giter8TemplatePlugin,sbt.plugins.IvyPlugin,sbt.plugins.JvmPlugin,sbt.plugins.SemanticdbPlugin,org.jetbrains.sbt.indices.SbtIntellijIndicesPlugin,sbt.plugins.JUnitXmlReportPlugin,org.jetbrains.sbt.IdeaShellPlugin,org.jetbrains.sbt.StructurePlugin,sbt.plugins.MiniDependencyTreePlugin)
+[debug] Plugins.deducer#function took 2.2675 ms
+[info] loading settings for project weatherdataproject from build.sbt ...
+[debug]         Load.resolveProject(weatherdataproject) took 43.0092ms
+[debug]       Load.loadTransitive: finalizeProject(Project(id weatherdataproject, base: C:\Users\megla\IdeaProjects\weatherDataProject, plugins: List(<none>))) took 46.9696ms
+[debug] [Loading] Done in C:\Users\megla\IdeaProjects\weatherDataProject, returning: (weatherdataproject)
+[debug]     Load.loadUnit: loadedProjectsRaw took 1324.1003ms
+[debug]     Load.loadUnit: cleanEvalClasses took 6.8408ms
+[debug]   Load.loadUnit(file:/C:/Users/megla/IdeaProjects/weatherDataProject/, ...) took 5360.7111ms
+[debug] Load.apply: load took 5362.9836ms
+[debug] Load.apply: resolveProjects took 0.1404ms
+[debug] Load.apply: finalTransforms took 26.1699ms
+[debug] Load.apply: config.delegates took 0.36ms
+[debug] Load.apply: Def.make(settings)... took 114.6553ms
+[debug] Load.apply: structureIndex took 20.3188ms
+[debug] Load.apply: mkStreams took 0.0026ms
+[info] set current project to WeatherDataProject (in build file:/C:/Users/megla/IdeaProjects/weatherDataProject/)
+[debug] > Exec(sbtPopOnFailure, None, None)
+[debug] > Exec(resumeFromFailure, None, None)
+[debug] > Exec(notifyUsersAboutShell, None, None)
+[debug] > Exec(iflast shell, None, None)
+[debug] > Exec(; set ideaPort in Global := 61848 ; idea-shell, None, None)
+[debug] > Exec(set ideaPort in Global := 61848, None, None)
+[info] Defining Global / ideaPort
+[info] The new value will be used by Compile / compile, Test / compile
+[debug] Defining 
+[debug] 	Global / ideaPort
+[debug] 
+[debug] The new value will be used by 
+[debug] 	Compile / compile
+[debug] 	Test / compile
+[info] Reapplying settings...
+[info] set current project to WeatherDataProject (in build file:/C:/Users/megla/IdeaProjects/weatherDataProject/)
+[debug] > Exec(idea-shell, None, None)

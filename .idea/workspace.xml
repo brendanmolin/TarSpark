@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="956e17d7-4dae-4e9d-aeea-68cc08faaf9e" name="Default Changelist" comment="made a comment to try an upload without libraries" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="SBT">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="WeatherDataProject" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectId" id="1quVm2ZAfQX7EwR3f9PZpUNvkSU" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ChangesTree.GroupingKeys" value="" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="project.structure.last.edited" value="SDKs" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="inlay.hints.Scala" />
+  </component>
+  <component name="RunManager">
+    <configuration name="WeatherAnalysis" type="Application" factoryName="Application" temporary="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="corretto-1.8" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="WeatherAnalysis" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.WeatherAnalysis" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="956e17d7-4dae-4e9d-aeea-68cc08faaf9e" name="Default Changelist" comment="" />
+      <created>1617929618795</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1617929618795</updated>
+    </task>
+    <task id="LOCAL-00001" summary="just some ideas">
+      <created>1618091059324</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1618091059324</updated>
+    </task>
+    <task id="LOCAL-00002" summary="just some ideas">
+      <created>1618091100197</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1618091100197</updated>
+    </task>
+    <task id="LOCAL-00003" summary="just some ideas">
+      <created>1618091156284</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1618091156284</updated>
+    </task>
+    <task id="LOCAL-00004" summary="just some ideas">
+      <created>1618091607938</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1618091607938</updated>
+    </task>
+    <task id="LOCAL-00005" summary="just some ideas">
+      <created>1618091715795</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1618091715795</updated>
+    </task>
+    <task id="LOCAL-00006" summary="adds print locations at &quot;lines&quot; and &quot;split&quot;&#10;found possible mistake in code at line 49 and took it out.">
+      <created>1618104670900</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1618104670900</updated>
+    </task>
+    <task id="LOCAL-00007" summary="adds print locations at &quot;lines&quot; and &quot;split&quot;&#10;found possible mistake in code at line 49 and took it out.">
+      <created>1618104687464</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1618104687464</updated>
+    </task>
+    <task id="LOCAL-00008" summary="added monthdate as cov val&#10;added year as cov val&#10;cloned snow as snowMonthdate (this only clones hist)&#10;cloned snow as snowYear (this only clones hist)&#10;&#10;removed duplicates at List  (line 46 and 47)&#10;&#10;still showing one duplicate - must be added after line 47 but not sure where/how.">
+      <created>1618200814148</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1618200814148</updated>
+    </task>
+    <task id="LOCAL-00009" summary="made a comment to try an upload without libraries">
+      <created>1618970144748</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1618970144748</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="just some ideas" />
+    <MESSAGE value="adds print locations at &quot;lines&quot; and &quot;split&quot;&#10;found possible mistake in code at line 49 and took it out." />
+    <MESSAGE value="added monthdate as cov val&#10;added year as cov val&#10;cloned snow as snowMonthdate (this only clones hist)&#10;cloned snow as snowYear (this only clones hist)&#10;&#10;removed duplicates at List  (line 46 and 47)&#10;&#10;still showing one duplicate - must be added after line 47 but not sure where/how." />
+    <MESSAGE value="made a comment to try an upload without libraries" />
+    <option name="LAST_COMMIT_MESSAGE" value="made a comment to try an upload without libraries" />
+  </component>
+</project>
