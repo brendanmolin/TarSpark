@@ -8,7 +8,7 @@ case class CovInt(var value: Int, var hist: ArrayBuffer[Int]){
     }
     CovInt(value % x, hist)
   }
-
+//add comment
   def toCovString: CovString = {
     CovString(value.toString, hist)
   }
