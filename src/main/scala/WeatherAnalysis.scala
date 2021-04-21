@@ -61,9 +61,11 @@ object WeatherAnalysis {
       val failLineOutputMap = failLinesOutput._1
       val totalNumberOfPasses = failLinesOutput._2
       val totalNumberOfFailures = failLinesOutput._3
+      println(failLineOutputMap)
+      println("totalNumberOfPasses: " + totalNumberOfPasses)
       println("totalNumberOfFailures: " + totalNumberOfFailures)
 
-      print(getFailedLine(failLineOutputMap, totalNumberOfPasses, totalNumberOfFailures))
+      println(getFailedLine(failLineOutputMap, totalNumberOfPasses, totalNumberOfFailures))
     }
   }
 
@@ -140,16 +142,29 @@ object WeatherAnalysis {
     //val LineRankings = collection.mutable.HashMap[Int, Int]() // Create new empty Map
     var lineRankings = ArrayBuffer[(Int, Double)]() //Create new list of Tuples
     for (eaLine <- resultMap){
+      println("eaLine: " + eaLine)
       val lineNo = eaLine._1
-      val failScore = eaLine._2._2 / totalNumberOfFailures
-      val passScore = eaLine._2._1 / totalNumberOfPasses
-      val score = failScore / (failScore + passScore)
-      //LineRankings(lineNo) = score
-      lineRankings.append((lineNo, score))
+      println("\tlineNo: " + lineNo)
+      if (totalNumberOfPasses == 0){
+        lineRankings.append((lineNo, 1))
+      }
+      else {
+        val failScore = eaLine._2._2.toDouble / totalNumberOfFailures
+        println("\t\teaLine._2._2: "+ eaLine._2._2)
+        println("\t\tfailScore: " + failScore)
+        val passScore = eaLine._2._1.toDouble / totalNumberOfPasses
+        println("\t\teaLine._2._1: "+ eaLine._2._1)
+        println("\t\ttotalNumberOfPasses: " + totalNumberOfPasses)
+        println("\t\tpassScore: " + passScore)
+        val score = failScore / (failScore + passScore)
+        println("\t\tscore: " + score)
+        lineRankings.append((lineNo, score))
+      }
     }
     // Sort Array
-    lineRankings.sortBy(_._2)(Ordering[Double].reverse)
-    println(lineRankings.take(10))
+    println("lineRankings: " + lineRankings)
+    lineRankings.sortBy(_._2)(Ordering[Double].reverse) //TODO want to sort by: score desc, lineNo asc
+    println("lineRankings sorted: " + lineRankings)
 
     return lineRankings(0)._1
   }
@@ -160,7 +175,6 @@ object WeatherAnalysis {
   def zipToState(str : CovString):CovString = {
     // This is meant to change a zipcode to a state,
     // but currently just converts it to a number 0-49
-    // TODO fix this potentially?
     return (str.toInt % 50).toCovString
   }
 
