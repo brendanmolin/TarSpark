@@ -31,11 +31,11 @@ object WeatherAnalysis {
         var state = zipToState(covtokens(0))
         var date = covtokens(1)
         // gets snow value and converts it into millimeter
-        val snow = convert_to_mm(covtokens(2)) // CAPTURE HERE
+        val snow = convert_to_mm(covtokens(2)) // CAPTURE HERE)
         //gets year
-        val year = date.diverge().substring(date.value.lastIndexOf("/") + 1).appendHistory(36)
+        val year = date.diverge().substring(date.value.lastIndexOf("/") + 1).appendHistory(Thread.currentThread().getStackTrace()(1).getLineNumber)
         // gets month / date
-        val monthdate= date.diverge().substring(0, date.value.lastIndexOf("/")).appendHistory(38)
+        val monthdate= date.diverge().substring(0, date.value.lastIndexOf("/")).appendHistory(Thread.currentThread().getStackTrace()(1).getLineNumber)
 
         List[((String , String) , CovFloat)](
           ((state.value , monthdate.value) , snow.diverge().mergeHistory(monthdate)) ,
@@ -65,9 +65,9 @@ object WeatherAnalysis {
     val unit = s.substring(s.length - 2)
     val v = s.substring(0, s.length - 2).toFloat
     unit.value match {
-      case "mm" => return v.appendHistory(68)
+      case "mm" => return v.appendHistory(Thread.currentThread().getStackTrace()(1).getLineNumber)
       //case "inch" => return ...
-      case _ => return (v * 304.8f).appendHistory(69)
+      case _ => return (v * 304.8f).appendHistory(Thread.currentThread().getStackTrace()(1).getLineNumber)
     }
   }
 
