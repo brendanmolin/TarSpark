@@ -21,7 +21,7 @@ object WeatherAnalysis {
       sparkConf.setAppName("Inverted Index").set("spark.executor.memory", "2g")
 
       val ctx = new SparkContext(sparkConf)
-      val lines = ctx.textFile("./data/all_data", 1)
+      val lines = ctx.textFile("./data/more_mm/data_more_mm", 1)
       val split = lines.flatMap{s =>
         var covS = CovString(s, ArrayBuffer[Int]())
         val covtokens = covS.split(",")
@@ -55,8 +55,6 @@ object WeatherAnalysis {
       for (o <- output.take(10)) {
         println(o)
       }
-      println(detectFailedLines(output))
-
       val failLinesOutput = summarizeFailLines(output)
       val failLineOutputMap = failLinesOutput._1
       val totalNumberOfPasses = failLinesOutput._2
@@ -79,32 +77,10 @@ object WeatherAnalysis {
     }
   }
 
-  def detectFailedLines(resultList:Array[((String, String), CovFloat)]): collection.mutable.HashMap[Int, (Int, Int)] = {
-    // (lineNo, (No of passing records, No of failing records)
-    val resultMap = collection.mutable.HashMap[Int, (Int, Int)]() // Create new empty Map
-    for (o <- resultList){
-      val isFailure = failure(o._2.value)
-      for (eaLine <- o._2.hist){
-        if (!resultMap.contains(eaLine)){ // If this line No isn't in the dictionary yet, add it
-          resultMap.+=((eaLine, (0, 0)))
-        }
-        if (isFailure){
-          val rec = resultMap.get(eaLine)
-          val new_rec = (rec.get._1, 1 + rec.get._2)
-          resultMap.update(eaLine, new_rec) // tuple can be stored in a separate var if error returned
-        } else {
-          val rec = resultMap.get(eaLine)
-          val new_rec = (1 + rec.get._1, rec.get._2)
-          resultMap.update(eaLine, new_rec) // tuple can be stored in a separate var if error returned
-        }
-      }
-    }
-    return resultMap
-  }
-
   def summarizeFailLines(resultList:Array[((String, String), CovFloat)]): (collection.mutable.HashMap[Int, (Int, Int)], Int, Int) = {
     // (lineNo, (No of passing records, No of failing records)
     var totalNumberOfPasses = resultList.length
+    println("Total number of results in output: "+ totalNumberOfPasses)
     var totalNumberOfFailures = 0
     val resultMap = collection.mutable.HashMap[Int, (Int, Int)]() // Create new empty Map
     for (o <- resultList){
@@ -151,6 +127,7 @@ object WeatherAnalysis {
       else {
         val failScore = eaLine._2._2.toDouble / totalNumberOfFailures
         println("\t\teaLine._2._2: "+ eaLine._2._2)
+        println("\t\ttotalNuberofFailures: " + totalNumberOfFailures)
         println("\t\tfailScore: " + failScore)
         val passScore = eaLine._2._1.toDouble / totalNumberOfPasses
         println("\t\teaLine._2._1: "+ eaLine._2._1)
