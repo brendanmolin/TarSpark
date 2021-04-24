@@ -156,7 +156,9 @@ object WeatherAnalysis {
         println("\t\teaLine._2._1: "+ eaLine._2._1)
         println("\t\ttotalNumberOfPasses: " + totalNumberOfPasses)
         println("\t\tpassScore: " + passScore)
-        val score = failScore / (failScore + passScore)
+        //val score = failScore / (failScore + passScore)
+        val score = eaLine._2._2.toDouble / math.sqrt((eaLine._2._2 + totalNumberOfFailures) * (eaLine._2._2 + eaLine._2._1))
+
         println("\t\tscore: " + score)
         lineRankings.append((lineNo, score))
       }
