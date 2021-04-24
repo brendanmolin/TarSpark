@@ -40,27 +40,28 @@ object WeatherDataGenerator {
             }
           }
         }
-        list}.iterator}.saveAsTextFile("data/more_mm")
+        list}.iterator}.saveAsTextFile("data/one_pct_in")
 
 
   }
   def getLowSnow(): String = {
-    if(Random.nextInt(90000000) == 99999){
+    if(Random.nextInt(100) == 99){
       return  "90in"
     }
-    // if(Random.nextInt(2) == 0){
-    if(Random.nextInt(1) == 0){
+    if(Random.nextInt(2) == 0){
+    //if(Random.nextInt(1) == 0){
       return Random.nextInt(160) + "mm"
     }else{
       return (Random.nextFloat()/2) + "ft"
     }
   }
   def getHighSnow(): String ={
-    if(Random.nextInt(90000000) == 99999){
+    1347840
+    if(Random.nextInt(100) == 99){
       return  "90in"
     }
-    // if(Random.nextInt(2) == 0){
-    if(Random.nextInt(1) == 0){
+    if(Random.nextInt(2) == 0){
+    //if(Random.nextInt(1) == 0){
       return Random.nextInt(4000) + "mm"
     }else{
       return (Random.nextFloat()*13) + "ft"

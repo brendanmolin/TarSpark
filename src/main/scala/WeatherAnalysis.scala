@@ -21,7 +21,7 @@ object WeatherAnalysis {
       sparkConf.setAppName("Inverted Index").set("spark.executor.memory", "2g")
 
       val ctx = new SparkContext(sparkConf)
-      val lines = ctx.textFile("./data/more_mm/data_more_mm", 1)
+      val lines = ctx.textFile("./data/one_pct_in/data_one_pct_in", 1)
       val split = lines.flatMap{s =>
         var covS = CovString(s, ArrayBuffer[Int]())
         val covtokens = covS.split(",")
@@ -86,6 +86,7 @@ object WeatherAnalysis {
     for (o <- resultList){
       val isFailure = failure(o._2.value)
       if (isFailure){
+        println("Failure found: " + o)
         totalNumberOfFailures += 1
         totalNumberOfPasses -= 1
       }
