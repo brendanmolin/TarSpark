@@ -163,10 +163,10 @@ object WeatherAnalysis {
     }
     // Sort Array
     println("lineRankings: " + lineRankings)
-    lineRankings.sortBy(_._2)(Ordering[Double].reverse) //TODO want to sort by: score desc, lineNo asc
-    println("lineRankings sorted: " + lineRankings)
+    val sortedLineRankings = lineRankings.sortBy(_._2)(Ordering[Double].reverse) //TODO want to sort by: score desc, lineNo asc
+    println("sortedLineRankings: " + sortedLineRankings)
 
-    return lineRankings(0)._1
+    return sortedLineRankings(0)._1
   }
 
   def failure(record:Float): Boolean ={
