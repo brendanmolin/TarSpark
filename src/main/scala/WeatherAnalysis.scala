@@ -11,17 +11,14 @@ object WeatherAnalysis {
 
   def main(args: Array[String]) {
     try {
-      //set up spark configuration
+      // Set up spark configuration
       val sparkConf = new SparkConf()
       sparkConf.setAppName("weatherData")
       sparkConf.setMaster("local[6]")
       sparkConf.set("spark.executor.memory", "2g")
-
-      sparkConf.setMaster("local[6]")
-      sparkConf.setAppName("Inverted Index").set("spark.executor.memory", "2g")
-
+      // Create Spark Context
       val ctx = new SparkContext(sparkConf)
-      val lines = ctx.textFile("./data/one_pct_in/data_one_pct_in", 1)
+      val lines = ctx.textFile("./data/originalData/allData", 1)
       val split = lines.flatMap{s =>
         var covS = CovString(s, ArrayBuffer[Int]())
         val covtokens = covS.split(",")
@@ -34,14 +31,10 @@ object WeatherAnalysis {
         val year = date.diverge().substring(date.value.lastIndexOf("/") + 1).appendHistory(Thread.currentThread().getStackTrace()(1).getLineNumber)
         // gets month / date
         val monthdate= date.diverge().substring(0, date.value.lastIndexOf("/")).appendHistory(Thread.currentThread().getStackTrace()(1).getLineNumber)
-
         List[((String , String) , CovFloat)](
           ((state.value , monthdate.value) , snow.diverge().mergeHistory(monthdate)) ,
           ((state.value , year.value)  , snow.diverge().mergeHistory(year))
         ).iterator
-      }
-      for (sn <- split.take(10)) {
-        println(sn)
       }
       val deltaSnow = split.groupByKey().map{ s  =>
         val s1 = s._2
@@ -51,19 +44,14 @@ object WeatherAnalysis {
       }
 
       val output = deltaSnow.collect()
-      var list = List[Long]()
-      for (o <- output.take(10)) {
-        println(o)
-      }
       val failLinesOutput = summarizeFailLines(output)
       val failLineOutputMap = failLinesOutput._1
       val totalNumberOfPasses = failLinesOutput._2
       val totalNumberOfFailures = failLinesOutput._3
-      println(failLineOutputMap)
+      println("FailureLines output map: " + failLineOutputMap)
       println("totalNumberOfPasses: " + totalNumberOfPasses)
       println("totalNumberOfFailures: " + totalNumberOfFailures)
-
-      println(getFailedLine(failLineOutputMap, totalNumberOfPasses, totalNumberOfFailures))
+      println("Suggested line with bug:" + getFailedLine(failLineOutputMap, totalNumberOfPasses, totalNumberOfFailures))
     }
   }
 
