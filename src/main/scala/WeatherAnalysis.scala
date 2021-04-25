@@ -22,14 +22,14 @@ object WeatherAnalysis {
       val split = lines.flatMap{s =>
         var covS = CovString(s, ArrayBuffer[Int]())
         val covtokens = covS.split(",")
-        // finds the state for a zipcode
+        // Finds the state for a zipcode
         var state = zipToState(covtokens(0))
         var date = covtokens(1)
-        // gets snow value and converts it into millimeter
-        val snow = convert_to_mm(covtokens(2)) // CAPTURE HERE)
-        //gets year
+        // Gets snow value and converts it into millimeter
+        val snow = convert_to_mm(covtokens(2))
+        // Gets year
         val year = date.diverge().substring(date.value.lastIndexOf("/") + 1).appendHistory(Thread.currentThread().getStackTrace()(1).getLineNumber)
-        // gets month / date
+        // Gets month / date
         val monthdate= date.diverge().substring(0, date.value.lastIndexOf("/")).appendHistory(Thread.currentThread().getStackTrace()(1).getLineNumber)
         List[((String , String) , CovFloat)](
           ((state.value , monthdate.value) , snow.diverge().mergeHistory(monthdate)) ,
@@ -51,7 +51,7 @@ object WeatherAnalysis {
       println("FailureLines output map: " + failLineOutputMap)
       println("totalNumberOfPasses: " + totalNumberOfPasses)
       println("totalNumberOfFailures: " + totalNumberOfFailures)
-      println("Suggested line with bug:" + getFailedLine(failLineOutputMap, totalNumberOfPasses, totalNumberOfFailures))
+      println("Suggested line with bug: " + getFailedLine(failLineOutputMap, totalNumberOfPasses, totalNumberOfFailures))
     }
   }
 
@@ -60,7 +60,6 @@ object WeatherAnalysis {
     val v = s.substring(0, s.length - 2).toFloat
     unit.value match {
       case "mm" => return v.appendHistory(Thread.currentThread().getStackTrace()(1).getLineNumber)
-      //case "inch" => return ...
       case _ => return (v * 304.8f).appendHistory(Thread.currentThread().getStackTrace()(1).getLineNumber)
     }
   }
@@ -68,13 +67,11 @@ object WeatherAnalysis {
   def summarizeFailLines(resultList:Array[((String, String), CovFloat)]): (collection.mutable.HashMap[Int, (Int, Int)], Int, Int) = {
     // (lineNo, (No of passing records, No of failing records)
     var totalNumberOfPasses = resultList.length
-    println("Total number of results in output: "+ totalNumberOfPasses)
     var totalNumberOfFailures = 0
     val resultMap = collection.mutable.HashMap[Int, (Int, Int)]() // Create new empty Map
     for (o <- resultList){
       val isFailure = failure(o._2.value)
       if (isFailure){
-        println("Failure found: " + o)
         totalNumberOfFailures += 1
         totalNumberOfPasses -= 1
       }
@@ -104,40 +101,31 @@ object WeatherAnalysis {
     if (totalNumberOfFailures == 0){
       return -1 /* No failing lines */
     }
-    //val LineRankings = collection.mutable.HashMap[Int, Int]() // Create new empty Map
     var lineRankings = ArrayBuffer[(Int, Double)]() //Create new list of Tuples
     for (eaLine <- resultMap){
-      println("eaLine: " + eaLine)
       val lineNo = eaLine._1
-      println("\tlineNo: " + lineNo)
       if (totalNumberOfPasses == 0){
         lineRankings.append((lineNo, 1))
       }
       else {
         val failScore = eaLine._2._2.toDouble / totalNumberOfFailures
-        println("\t\teaLine._2._2: "+ eaLine._2._2)
-        println("\t\ttotalNuberofFailures: " + totalNumberOfFailures)
-        println("\t\tfailScore: " + failScore)
         val passScore = eaLine._2._1.toDouble / totalNumberOfPasses
-        println("\t\teaLine._2._1: "+ eaLine._2._1)
-        println("\t\ttotalNumberOfPasses: " + totalNumberOfPasses)
-        println("\t\tpassScore: " + passScore)
         val score = failScore / (failScore + passScore)
-        println("\t\tscore: " + score)
         lineRankings.append((lineNo, score))
       }
     }
     // Sort Array
-    println("lineRankings: " + lineRankings)
-    val sortedLineRankings1 = lineRankings.sortBy(_._1)(Ordering[Int]) //First sort by LineNo
-    val sortedLineRankings2 = sortedLineRankings1.sortBy(_._2)(Ordering[Double].reverse) //Then sort by Score
-    println("sortedLineRankings: " + sortedLineRankings2)
+    val sortedLineRankings1 = lineRankings.sortBy(_._1)(Ordering[Int]) // First sort by LineNo
+    val sortedLineRankings2 = sortedLineRankings1.sortBy(_._2)(Ordering[Double].reverse) // Then sort by Score
+    println("Line Rankings: (LineNo, Suspicious Score)")
+    println(sortedLineRankings2)
     return sortedLineRankings2(0)._1
   }
 
   def failure(record:Float): Boolean ={
     record > 6000f
   }
+
   def zipToState(str : CovString):CovString = {
     // This is meant to change a zipcode to a state,
     // but currently just converts it to a number 0-49
