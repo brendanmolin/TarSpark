@@ -1,13 +1,16 @@
 import collection.mutable.ArrayBuffer
+import scala.tools.scalap.scalax.rules.scalasig.AnnotatedWithSelfType
 
 case class CovFloat(value: Float, hist: ArrayBuffer[Int]) {
 
-  def appendHistory(lineNum: Int): CovFloat = {
-    CovFloat(value, (hist+=lineNum).distinct)
+  def updateTrace(x: ArrayBuffer[Int]): ArrayBuffer[Int] = {
+    val newLine = Thread.currentThread().getStackTrace()(1).getLineNumber
+    (x+=newLine).distinct
   }
 
   def diverge(): CovFloat = {
-    CovFloat(value, hist.clone())
+    val copy = updateTrace(hist.clone())
+    CovFloat(value, copy)
   }
 
   def mergeHistory(a: CovFloat): CovFloat = {
@@ -19,11 +22,15 @@ case class CovFloat(value: Float, hist: ArrayBuffer[Int]) {
   }
 
   def *(x: Float): CovFloat = {
-    CovFloat(value * x, hist)
+    CovFloat(value * x, updateTrace(hist))
   }
 
   def -(x: CovFloat): CovFloat = {
     CovFloat(value - x.value, (hist ++ x.hist).distinct)
+  }
+
+  def appendHistory(lineNum: Int): CovFloat = { //obsolete
+    CovFloat(value, (hist+=lineNum).distinct)
   }
 }
 

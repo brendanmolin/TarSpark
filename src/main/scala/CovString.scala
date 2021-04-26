@@ -2,6 +2,11 @@ import collection.mutable.ArrayBuffer
 
 case class CovString(var value: String, var hist: ArrayBuffer[Int]){
 
+  def updateTrace(x: ArrayBuffer[Int]): ArrayBuffer[Int] = {
+    val newLine = Thread.currentThread().getStackTrace()(1).getLineNumber
+    (x+=newLine).distinct
+  }
+
   def appendHistory(lineNum: Int): CovString = {
     CovString(value, (hist+=lineNum).distinct)
   }
@@ -25,7 +30,8 @@ case class CovString(var value: String, var hist: ArrayBuffer[Int]){
   }
 
   def diverge(): CovString = {
-    CovString(value, hist.clone())
+    val copy = updateTrace(hist.clone())
+    CovString(value, copy)
   }
 
   def mergeHistory(a: CovFloat): CovString = {
