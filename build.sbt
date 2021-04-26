@@ -11,3 +11,5 @@ libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-streaming" % sparkVersion,
   "org.apache.spark" %% "spark-streaming-twitter" % sparkVersion
 )
+
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.8" % Test
