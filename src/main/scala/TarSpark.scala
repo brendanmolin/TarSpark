@@ -1,13 +1,9 @@
+import scala.collection.mutable.ArrayBuffer
 
-
-case class TarSpark[_](pipeline: _) {
+case class TarSpark(pipeline: Pipeline) {
 
   def main() = {
-    val output = pipeline.main()
-    print("you did it")
-  }
-
-/*  def callTar():
+    val output = pipeline.run()
     val failLinesOutput = summarizeFailLines(output)
     val failLineOutputMap = failLinesOutput._1
     val totalNumberOfPasses = failLinesOutput._2
@@ -16,7 +12,7 @@ case class TarSpark[_](pipeline: _) {
     println("totalNumberOfPasses: " + totalNumberOfPasses)
     println("totalNumberOfFailures: " + totalNumberOfFailures)
     println("Suggested line with bug: " + getFailedLine(failLineOutputMap, totalNumberOfPasses, totalNumberOfFailures))
-
+  }
 
   def summarizeFailLines(resultList:Array[((String, String), CovFloat)]): (collection.mutable.HashMap[Int, (Int, Int)], Int, Int) = {
     // (lineNo, (No of passing records, No of failing records)
@@ -24,7 +20,7 @@ case class TarSpark[_](pipeline: _) {
     var totalNumberOfFailures = 0
     val resultMap = collection.mutable.HashMap[Int, (Int, Int)]() // Create new empty Map
     for (o <- resultList){
-      val isFailure = failure(o._2.value)
+      val isFailure = pipeline.failure(o._2.value)
       if (isFailure){
         totalNumberOfFailures += 1
         totalNumberOfPasses -= 1
@@ -74,7 +70,7 @@ case class TarSpark[_](pipeline: _) {
     println("Line Rankings: (LineNo, Suspicious Score)")
     println(sortedLineRankings2)
     return sortedLineRankings2(0)._1
-  }*/
+  }
 
 
 }

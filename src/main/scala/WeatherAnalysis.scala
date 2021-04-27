@@ -7,9 +7,9 @@ import org.apache.spark.{SparkContext, SparkConf}
  * Created by ali on 2/25/17.
  * Modified by BDE Team on Spring 2021
  */
-object WeatherAnalysis {
+case class WeatherAnalysis() extends Pipeline {
 
-  def main(args: Array[String]) {
+  def run(): Array[((String, String), CovFloat)] = {
     try {
       // Set up spark configuration
       val sparkConf = new SparkConf()
