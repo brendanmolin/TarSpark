@@ -3,7 +3,7 @@ import collection.mutable.ArrayBuffer
 case class CovString(var value: String, var hist: ArrayBuffer[Int]){
 
   def updateTrace(x: ArrayBuffer[Int]): ArrayBuffer[Int] = {
-    val newLine = Thread.currentThread().getStackTrace()(1).getLineNumber
+    val newLine = Thread.currentThread().getStackTrace()(3).getLineNumber
     (x+=newLine).distinct
   }
 

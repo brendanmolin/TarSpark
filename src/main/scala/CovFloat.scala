@@ -4,7 +4,7 @@ import scala.tools.scalap.scalax.rules.scalasig.AnnotatedWithSelfType
 case class CovFloat(value: Float, hist: ArrayBuffer[Int]) {
 
   def updateTrace(x: ArrayBuffer[Int]): ArrayBuffer[Int] = {
-    val newLine = Thread.currentThread().getStackTrace()(1).getLineNumber
+    val newLine = Thread.currentThread().getStackTrace()(3).getLineNumber
     (x+=newLine).distinct
   }
 
