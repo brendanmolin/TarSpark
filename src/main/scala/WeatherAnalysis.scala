@@ -33,13 +33,13 @@ object WeatherAnalysis {
         // gets snow value and converts it into millimeter
         val snow = convert_to_mm(covtokens(2)) // CAPTURE HERE)
         //gets year
-        val year = date.diverge().substring(date.value.lastIndexOf("/") + 1)
+        val year = date.substring(date.value.lastIndexOf("/") + 1).updateTrace()
         // gets month / date
-        val monthdate = date.diverge().substring(0, date.value.lastIndexOf("/"))
+        val monthdate = date.substring(0, date.value.lastIndexOf("/")).updateTrace()
 
         List[((String , String) , CovFloat)](
-          ((state.value , monthdate.value) , snow.diverge().mergeHistory(monthdate)) ,
-          ((state.value , year.value)  , snow.diverge().mergeHistory(year))
+          ((state.value , monthdate.value) , snow.mergeHistory(monthdate)) ,
+          ((state.value , year.value)  , snow.mergeHistory(year))
         ).iterator
       }
       for (sn <- split.take(10)) {

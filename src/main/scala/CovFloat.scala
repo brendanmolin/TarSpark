@@ -8,17 +8,14 @@ case class CovFloat(value: Float, hist: ArrayBuffer[Int]) {
     (x+=newLine).distinct
   }
 
-  def diverge(): CovFloat = {
-    val copy = updateTrace(hist.clone())
-    CovFloat(value, copy)
-  }
-
   def mergeHistory(a: CovFloat): CovFloat = {
-    CovFloat(value, (hist ++= a.hist).distinct)
+    val temp = hist.clone()
+    CovFloat(value, (temp ++= a.hist).distinct)
   }
 
   def mergeHistory(a: CovString): CovFloat = {
-    CovFloat(value, (hist ++= a.hist).distinct)
+    val temp = hist.clone()
+    CovFloat(value, (temp ++= a.hist).distinct)
   }
 
   def *(x: Float): CovFloat = {
@@ -26,12 +23,19 @@ case class CovFloat(value: Float, hist: ArrayBuffer[Int]) {
   }
 
   def -(x: CovFloat): CovFloat = {
-    CovFloat(value - x.value, (hist ++ x.hist).distinct)
+    val temp = hist.clone()
+    CovFloat(value - x.value, (temp ++ x.hist).distinct)
   }
 
-  def appendHistory(lineNum: Int): CovFloat = { //obsolete
+  /*def diverge(): CovFloat = {
+  val x = hist.clone()
+  val copy = updateTrace(hist.clone())
+  CovFloat(value, copy)
+}*/
+
+  /*def appendHistory(lineNum: Int): CovFloat = { //obsolete
     CovFloat(value, (hist+=lineNum).distinct)
-  }
+  }*/
 }
 
 object CovFloat {
