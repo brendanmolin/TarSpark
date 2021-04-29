@@ -33,9 +33,9 @@ object WeatherAnalysis {
         // gets snow value and converts it into millimeter
         val snow = convert_to_mm(covtokens(2)) // CAPTURE HERE)
         //gets year
-        val year = date.substring(date.value.lastIndexOf("/") + 1).updateTrace()
+        val year = date.substring(date.value.lastIndexOf("/") + 1)
         // gets month / date
-        val monthdate = date.substring(0, date.value.lastIndexOf("/")).updateTrace()
+        val monthdate = date.substring(0, date.value.lastIndexOf("/"))
 
         List[((String , String) , CovFloat)](
           ((state.value , monthdate.value) , snow.mergeHistory(monthdate)) ,
