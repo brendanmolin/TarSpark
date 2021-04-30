@@ -24,6 +24,7 @@ case class TarSpark(pipeline: Pipeline) {
       if (isFailure){
         totalNumberOfFailures += 1
         totalNumberOfPasses -= 1
+        println("Failure Found! " + o)
       }
       for (eaLine <- o._2.hist){
         if (!resultMap.contains(eaLine)){ // If this line No isn't in the dictionary yet, add it
