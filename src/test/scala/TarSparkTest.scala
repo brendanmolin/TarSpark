@@ -2,7 +2,7 @@ import org.scalatest.FunSuite
 
 import scala.collection.mutable.ArrayBuffer
 
-class WeatherAnalysisTest extends FunSuite {
+class TarSparkTest extends FunSuite {
   test("TarSpark.getFailedLine") {
     val totalNumberOfPasses = 8
     val totalNumberOfFails = 2
