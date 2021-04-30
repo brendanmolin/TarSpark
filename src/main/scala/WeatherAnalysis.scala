@@ -25,15 +25,16 @@ object WeatherAnalysis {
         // Finds the state for a zipcode
         var state = zipToState(covtokens(0))
         var date = covtokens(1)
-        // Gets snow value and converts it into millimeter
-        val snow = convert_to_mm(covtokens(2))
-        // Gets year
-        val year = date.diverge().substring(date.value.lastIndexOf("/") + 1).appendHistory(Thread.currentThread().getStackTrace()(1).getLineNumber)
-        // Gets month / date
-        val monthdate= date.diverge().substring(0, date.value.lastIndexOf("/")).appendHistory(Thread.currentThread().getStackTrace()(1).getLineNumber)
+        // gets snow value and converts it into millimeter
+        val snow = convert_to_mm(covtokens(2)) // CAPTURE HERE)
+        //gets year
+        val year = date.substring(date.value.lastIndexOf("/") + 1)
+        // gets month / date
+        val monthdate = date.substring(0, date.value.lastIndexOf("/"))
+
         List[((String , String) , CovFloat)](
-          ((state.value , monthdate.value) , snow.diverge().mergeHistory(monthdate)) ,
-          ((state.value , year.value)  , snow.diverge().mergeHistory(year))
+          ((state.value , monthdate.value) , snow.mergeHistory(monthdate)) ,
+          ((state.value , year.value)  , snow.mergeHistory(year))
         ).iterator
       }
       val deltaSnow = split.groupByKey().map{ s  =>
@@ -59,8 +60,9 @@ object WeatherAnalysis {
     val unit = s.substring(s.length - 2)
     val v = s.substring(0, s.length - 2).toFloat
     unit.value match {
-      case "mm" => return v.appendHistory(Thread.currentThread().getStackTrace()(1).getLineNumber)
-      case _ => return (v * 304.8f).appendHistory(Thread.currentThread().getStackTrace()(1).getLineNumber)
+      case "mm" => return (v * 1f)
+      //case "inch" => return ...
+      case _ => return (v * 304.8f)
     }
   }
 
