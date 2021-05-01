@@ -8,10 +8,11 @@ case class TarSpark(pipeline: Pipeline) {
     val failLineOutputMap = failLinesOutput._1
     val totalNumberOfPasses = failLinesOutput._2
     val totalNumberOfFailures = failLinesOutput._3
+    val suspiciousLine = getFailedLine(failLineOutputMap, totalNumberOfPasses, totalNumberOfFailures)
     println("FailureLines output map: " + failLineOutputMap)
     println("totalNumberOfPasses: " + totalNumberOfPasses)
     println("totalNumberOfFailures: " + totalNumberOfFailures)
-    println("Suggested line with bug: " + getFailedLine(failLineOutputMap, totalNumberOfPasses, totalNumberOfFailures))
+    println("Suggested line with bug: " + suspiciousLine)
   }
 
   def summarizeFailLines(resultList:Array[((String, String), CovFloat)]): (collection.mutable.HashMap[Int, (Int, Int)], Int, Int) = {
@@ -20,7 +21,7 @@ case class TarSpark(pipeline: Pipeline) {
     var totalNumberOfFailures = 0
     val resultMap = collection.mutable.HashMap[Int, (Int, Int)]() // Create new empty Map
     for (o <- resultList){
-      val isFailure = pipeline.failure(o._2.value)
+      val isFailure = pipeline.failure(o)
       if (isFailure){
         totalNumberOfFailures += 1
         totalNumberOfPasses -= 1

@@ -26,12 +26,11 @@ case class WeatherAnalysis() extends Pipeline {
         var state = zipToState(covtokens(0))
         var date = covtokens(1)
         // gets snow value and converts it into millimeter
-        val snow = convert_to_mm(covtokens(2)) // CAPTURE HERE)
+        val snow = convert_to_mm(covtokens(2))
         //gets year
         val year = date.substring(date.value.lastIndexOf("/") + 1)
         // gets month / date
         val monthdate = date.substring(0, date.value.lastIndexOf("/"))
-
         List[((String , String) , CovFloat)](
           ((state.value , monthdate.value) , snow.mergeHistory(monthdate)) ,
           ((state.value , year.value)  , snow.mergeHistory(year))
@@ -45,6 +44,7 @@ case class WeatherAnalysis() extends Pipeline {
       }
 
       val output = deltaSnow.collect()
+      println("Total number of output Records: " + output.length)
       return output
     }
   }
@@ -61,8 +61,8 @@ case class WeatherAnalysis() extends Pipeline {
 
 
 
-  def failure(record:Float): Boolean ={
-    record > 6000f
+  def failure(record:((String, String), CovFloat)): Boolean ={
+    record._2.value > 6000f
   }
 
   def zipToState(str : CovString):CovString = {
