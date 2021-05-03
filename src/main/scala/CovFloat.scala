@@ -24,8 +24,8 @@ case class CovFloat(value: Float, hist: ArrayBuffer[Int]) {
   }
 
   def -(x: CovFloat): CovFloat = {
-    val temp = hist.clone()
-    CovFloat(value - x.value, updateTrace())
+    val temp2 = x.hist.clone()
+    CovFloat(value - x.value, (temp2 ++= updateTrace()).distinct)
   }
 }
 
